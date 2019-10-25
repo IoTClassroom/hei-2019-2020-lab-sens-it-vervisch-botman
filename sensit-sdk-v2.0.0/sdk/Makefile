@@ -7,14 +7,14 @@
 # SDK LIBRARY
 # -----------
 LIB_NAME = SENSIT_SDK_V2.0.0
-LIB_PATH = /sensit-sdk-v2.0.0/sdk/lib
+LIB_PATH = D:/Documents/Cours_HEI/H4/Programmation_Embarquee/TPs/TP_Emb_1/hei-2019-2020-lab-sens-it-vervisch-botman/sensit-sdk-v2.0.0/sdk/lib
 
 
 # --------------
 # OUTPUT FOLDERS
 # --------------
-BIN_PATH = /sensit-sdk-v2.0.0/sdk/bin
-OBJ_PATH = /sensit-sdk-v2.0.0/sdk/obj
+BIN_PATH = D:/Documents/Cours_HEI/H4/Programmation_Embarquee/TPs/TP_Emb_1/hei-2019-2020-lab-sens-it-vervisch-botman/sensit-sdk-v2.0.0/sdk/bin
+OBJ_PATH = D:/Documents/Cours_HEI/H4/Programmation_Embarquee/TPs/TP_Emb_1/hei-2019-2020-lab-sens-it-vervisch-botman/sensit-sdk-v2.0.0/sdk/obj
 
 
 # ------------
@@ -30,9 +30,9 @@ SIZE_OUTPUT = $(OUTPUT_NAME).siz
 # ---------
 # TOOLCHAIN
 # ---------
-CC = D:/Program files/ITI-Temp/8-2019-q3-update/bin/arm-none-eabi-gcc
-BIN_TOOL  = D:/Program files/ITI-Temp/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-objcopy
-SIZE_TOOL = D:/Program files/ITI-Temp/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-size
+CC = "D:/Program files/ITI-Temp/8-2019-q3-update/bin/arm-none-eabi-gcc"
+BIN_TOOL  = "D:/Program files/ITI-Temp/8-2019-q3-update/bin/arm-none-eabi-objcopy"
+SIZE_TOOL = "D:/Program files/ITI-Temp/8-2019-q3-update/bin/arm-none-eabi-size"
 
 
 # -------------------
