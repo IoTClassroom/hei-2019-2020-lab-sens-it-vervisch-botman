@@ -7,14 +7,14 @@
 # SDK LIBRARY
 # -----------
 LIB_NAME = SENSIT_SDK_V2.0.0
-LIB_PATH = lib
+LIB_PATH = /sensit-sdk-v2.0.0/sdk/lib
 
 
 # --------------
 # OUTPUT FOLDERS
 # --------------
-BIN_PATH = bin
-OBJ_PATH = obj
+BIN_PATH = /sensit-sdk-v2.0.0/sdk/bin
+OBJ_PATH = /sensit-sdk-v2.0.0/sdk/obj
 
 
 # ------------
@@ -30,9 +30,9 @@ SIZE_OUTPUT = $(OUTPUT_NAME).siz
 # ---------
 # TOOLCHAIN
 # ---------
-CC = arm-none-eabi-gcc
-BIN_TOOL  = arm-none-eabi-objcopy
-SIZE_TOOL = arm-none-eabi-size
+CC = D:/Program files/ITI-Temp/8-2019-q3-update/bin/arm-none-eabi-gcc
+BIN_TOOL  = D:/Program files/ITI-Temp/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-objcopy
+SIZE_TOOL = D:/Program files/ITI-Temp/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-size
 
 
 # -------------------
@@ -190,4 +190,4 @@ dir:
 
 # Rule for USB flashing using dfu file manager (vendor id 0483)
 prog:
-	dfu-util -a 0 -s 0x08000000:leave -D $(BIN_PATH)/$(BIN_OUTPUT)
+	D:/Documents/Cours_HEI/H4/Programmation_Embarquee/TPs/TP_Emb_1/dfu-util-0.9-win64/dfu-util -a 0 -s 0x08000000:leave -D $(BIN_PATH)/$(BIN_OUTPUT)
