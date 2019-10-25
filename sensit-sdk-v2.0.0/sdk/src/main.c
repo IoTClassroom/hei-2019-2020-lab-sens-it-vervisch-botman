@@ -120,7 +120,7 @@ int main()
         {
 
             /* Send the message */
-            err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)"HI", 2, FALSE, NULL);
+            err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)"VER-BOT-TEN", 11, FALSE, NULL);
             /* Parse the error code */
             ERROR_parser(err);
 
