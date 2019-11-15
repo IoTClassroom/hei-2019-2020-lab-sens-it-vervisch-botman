@@ -118,6 +118,14 @@ typedef struct {
     bool button;
 } discovery_data_s;
 
+typedef struct {
+    s16 temperature;
+    u16 humidity;
+    u16 brightness;
+    u16 event_counter;
+    bool button;
+} project_data_s;
+
 
 /*!************************************************************************
  * \fn void DISCOVERY_build_payload(discovery_payload_s* payload, discovery_mode_e mode, discovery_data_s* data)

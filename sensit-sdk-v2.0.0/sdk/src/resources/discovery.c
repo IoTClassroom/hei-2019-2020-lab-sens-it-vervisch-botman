@@ -78,6 +78,7 @@ void DISCOVERY_build_payload(discovery_payload_s* payload, discovery_mode_e mode
             payload->humidity = data->humidity;
         }
     }
+
     else if ( mode == MODE_LIGHT )
     {
         payload->brightnessMSB = (u8)(data->brightness >> 8);

@@ -1,10 +1,11 @@
 /*!******************************************************************
- * \file main_TEMPERATURE.c
- * \brief Sens'it Discovery mode Temperature demonstration code
+ * \file main.c
+ * \brief Sens'it SDK template
  * \author Sens'it Team
  * \copyright Copyright (c) 2018 Sigfox, All Rights Reserved.
  *
- * For more information on this firmware, see temperature.md.
+ * This file is an empty main template.
+ * You can use it as a basis to develop your own firmware.
  *******************************************************************/
 /******* INCLUDES **************************************************/
 #include "sensit_types.h"
@@ -15,16 +16,11 @@
 #include "radio_api.h"
 #include "hts221.h"
 #include "ltr329.h"
+#include "fxos8700.h"
 #include "discovery.h"
 
-
-/******** DEFINES **************************************************/
-#define MEASUREMENT_PERIOD                 600 /* Measurement & Message sending period, in second */
-
-
 /******* GLOBAL VARIABLES ******************************************/
-u8 firmware_version[] = "PROJECT_v2.0.0";
-
+u8 firmware_version[] = "TEMPLATE";
 
 /*******************************************************************/
 
@@ -32,11 +28,8 @@ int main()
 {
     error_t err;
     button_e btn;
+    u16 battery_level;
     bool send = FALSE;
-    u16 trash;
-
-    /* Discovery payload variable */
-    discovery_data_s data = {0};
 
     /* Start of initialization */
 
@@ -50,13 +43,14 @@ int main()
     /* Initialize temperature & humidity sensor */
     err = HTS221_init();
     ERROR_parser(err);
-    
+
     /* Initialize light sensor */
     err = LTR329_init();
     ERROR_parser(err);
 
-    /* Initialize RTC alarm timer */
-    SENSIT_API_set_rtc_alarm(MEASUREMENT_PERIOD);
+    /* Initialize accelerometer */
+    err = FXOS8700_init();
+    ERROR_parser(err);
 
     /* Clear pending interrupt */
     pending_interrupt = 0;
@@ -68,42 +62,11 @@ int main()
         /* Execution loop */
 
         /* Check of battery level */
-        BATTERY_handler(&(data.battery));
+        BATTERY_handler(&battery_level);
 
         /* RTC alarm interrupt handler */
         if ((pending_interrupt & INTERRUPT_MASK_RTC) == INTERRUPT_MASK_RTC)
         {
-        	/* Active light sensor */
-            LTR329_set_active_mode(LTR329_GAIN_96X);
-            /* Do a brightness measurement */
-            err = LTR329_measure(&(data.brightness), &trash);
-            /* Sensor back in standby mode */
-            LTR329_set_standby_mode();
-
-            if (err != LTR329_ERR_NONE)
-            {
-                ERROR_parser(err);
-            }
-            else
-            {
-                /* Set send flag */
-                send = TRUE;
-            }
-
-            /* Clear interrupt */
-            pending_interrupt &= ~INTERRUPT_MASK_RTC;
-            /* Do a temperatue & relative humidity measurement */
-            err = HTS221_measure(&(data.temperature), &(data.humidity));
-            if (err != HTS221_ERR_NONE)
-            {
-                ERROR_parser(err);
-            }
-            else
-            {
-                /* Set send flag */
-                send = TRUE;
-            }
-
             /* Clear interrupt */
             pending_interrupt &= ~INTERRUPT_MASK_RTC;
         }
@@ -112,7 +75,7 @@ int main()
         if ((pending_interrupt & INTERRUPT_MASK_BUTTON) == INTERRUPT_MASK_BUTTON)
         {
             /* RGB Led ON during count of button presses */
-            SENSIT_API_set_rgb_led(RGB_GREEN);
+            SENSIT_API_set_rgb_led(RGB_WHITE);
 
             /* Count number of presses */
             btn = BUTTON_handler();
@@ -120,13 +83,13 @@ int main()
             /* RGB Led OFF */
             SENSIT_API_set_rgb_led(RGB_OFF);
 
-            if (btn == BUTTON_TWO_PRESSES)
+            if (btn == BUTTON_THREE_PRESSES)
             {
-                /* Set button flag to TRUE */
-                data.button = TRUE;
-
                 /* Force a RTC alarm interrupt to do a new measurement */
                 pending_interrupt |= INTERRUPT_MASK_RTC;
+
+                /* Set send Sigfox */
+                send = TRUE;
             }
             else if (btn == BUTTON_FOUR_PRESSES)
             {
@@ -155,10 +118,9 @@ int main()
         /* Check if we need to send a message */
         if (send == TRUE)
         {
-    		u8 result = (((0b0101 << 4) | data.humidity)<<4 | data.brightness)<<4 | data.temperature;
-			
+
             /* Send the message */
-            err = RADIO_API_send_message(RGB_GREEN, (u8 *)&result, 64, FALSE, NULL);
+            err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)"VER-BOT-TEN", 11, FALSE, NULL);
             /* Parse the error code */
             ERROR_parser(err);
 
