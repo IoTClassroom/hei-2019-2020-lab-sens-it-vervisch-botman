@@ -1,3 +1,4 @@
-Sens'it ID: ABCDEF
-Firstnames: Bob-Jacques
-Lastnames: Dupont-Joe
+Sens'it ID: B436A2
+Use-case:4 - Environment sensing
+Firstnames: Pierre-Loïc
+Lastnames: Botman-Vervisch
